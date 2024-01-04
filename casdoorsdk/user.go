@@ -44,6 +44,7 @@ type Userinfo struct {
 	Sub         string   `json:"sub"`
 	Iss         string   `json:"iss"`
 	Aud         string   `json:"aud"`
+	PpgID       string   `json:"ppg_id"`
 	Name        string   `json:"preferred_username,omitempty"`
 	DisplayName string   `json:"name,omitempty"`
 	Email       string   `json:"email,omitempty"`
@@ -127,6 +128,7 @@ type User struct {
 	Infoflow        string `xorm:"infoflow varchar(100)" json:"infoflow"`
 	Apple           string `xorm:"apple varchar(100)" json:"apple"`
 	AzureAD         string `xorm:"azuread varchar(100)" json:"azuread"`
+	AzureADB2c      string `xorm:"azureadb2c varchar(100)" json:"azureadb2c"`
 	Slack           string `xorm:"slack varchar(100)" json:"slack"`
 	Steam           string `xorm:"steam varchar(100)" json:"steam"`
 	Bilibili        string `xorm:"bilibili varchar(100)" json:"bilibili"`
@@ -185,13 +187,13 @@ type User struct {
 	Web3Onboard     string `xorm:"web3onboard varchar(100)" json:"web3onboard"`
 	Custom          string `xorm:"custom varchar(100)" json:"custom"`
 
-	// WebauthnCredentials []webauthn.Credential `xorm:"webauthnCredentials blob" json:"webauthnCredentials"`
-	PreferredMfaType string   `xorm:"varchar(100)" json:"preferredMfaType"`
-	RecoveryCodes    []string `xorm:"varchar(1000)" json:"recoveryCodes"`
-	TotpSecret       string   `xorm:"varchar(100)" json:"totpSecret"`
-	MfaPhoneEnabled  bool     `json:"mfaPhoneEnabled"`
-	MfaEmailEnabled  bool     `json:"mfaEmailEnabled"`
-	// MultiFactorAuths    []*MfaProps           `xorm:"-" json:"multiFactorAuths,omitempty"`
+	//WebauthnCredentials []webauthn.Credential `xorm:"webauthnCredentials blob" json:"webauthnCredentials"`
+	PreferredMfaType string      `xorm:"varchar(100)" json:"preferredMfaType"`
+	RecoveryCodes    []string    `xorm:"varchar(1000)" json:"recoveryCodes"`
+	TotpSecret       string      `xorm:"varchar(100)" json:"totpSecret"`
+	MfaPhoneEnabled  bool        `json:"mfaPhoneEnabled"`
+	MfaEmailEnabled  bool        `json:"mfaEmailEnabled"`
+	MultiFactorAuths []*MfaProps `xorm:"-" json:"multiFactorAuths,omitempty"`
 
 	Ldap       string            `xorm:"ldap varchar(100)" json:"ldap"`
 	Properties map[string]string `json:"properties"`

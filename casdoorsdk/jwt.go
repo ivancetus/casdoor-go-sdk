@@ -21,10 +21,19 @@ import (
 )
 
 type Claims struct {
-	User
-	AccessToken string `json:"accessToken"`
+	*User
+	TokenType string `json:"tokenType,omitempty"`
+	Nonce     string `json:"nonce,omitempty"`
+	Tag       string `json:"tag"`
+	Scope     string `json:"scope,omitempty"`
 	jwt.RegisteredClaims
 }
+
+//type Claims struct {
+//	User
+//	AccessToken string `json:"accessToken"`
+//	jwt.RegisteredClaims
+//}
 
 func (c *Client) ParseJwtToken(token string) (*Claims, error) {
 	t, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
