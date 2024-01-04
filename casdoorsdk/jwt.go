@@ -25,6 +25,7 @@ type Claims struct {
 	TokenType string `json:"tokenType,omitempty"`
 	Nonce     string `json:"nonce,omitempty"`
 	Tag       string `json:"tag"`
+	PpgId     string `json:"ppgId"`
 	Scope     string `json:"scope,omitempty"`
 	jwt.RegisteredClaims
 }
