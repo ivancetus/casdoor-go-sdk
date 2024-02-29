@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/go-webauthn/webauthn/webauthn"
 	"strconv"
 )
 
@@ -60,11 +61,12 @@ type User struct {
 	Name        string `xorm:"varchar(100) notnull pk" json:"name"`
 	CreatedTime string `xorm:"varchar(100) index" json:"createdTime"`
 	UpdatedTime string `xorm:"varchar(100)" json:"updatedTime"`
+	DeletedTime string `xorm:"varchar(100)" json:"deletedTime"`
 
 	Id                string   `xorm:"varchar(100) index" json:"id"`
 	ExternalId        string   `xorm:"varchar(100) index" json:"externalId"`
 	Type              string   `xorm:"varchar(100)" json:"type"`
-	Password          string   `xorm:"varchar(100)" json:"password"`
+	Password          string   `xorm:"varchar(150)" json:"password"`
 	PasswordSalt      string   `xorm:"varchar(100)" json:"passwordSalt"`
 	PasswordType      string   `xorm:"varchar(100)" json:"passwordType"`
 	DisplayName       string   `xorm:"varchar(100)" json:"displayName"`
@@ -75,7 +77,7 @@ type User struct {
 	PermanentAvatar   string   `xorm:"varchar(500)" json:"permanentAvatar"`
 	Email             string   `xorm:"varchar(100) index" json:"email"`
 	EmailVerified     bool     `json:"emailVerified"`
-	Phone             string   `xorm:"varchar(20) index" json:"phone"`
+	Phone             string   `xorm:"varchar(100) index" json:"phone"`
 	CountryCode       string   `xorm:"varchar(6)" json:"countryCode"`
 	Region            string   `xorm:"varchar(100)" json:"region"`
 	Location          string   `xorm:"varchar(100)" json:"location"`
@@ -187,13 +189,15 @@ type User struct {
 	Web3Onboard     string `xorm:"web3onboard varchar(100)" json:"web3onboard"`
 	Custom          string `xorm:"custom varchar(100)" json:"custom"`
 
-	//WebauthnCredentials []webauthn.Credential `xorm:"webauthnCredentials blob" json:"webauthnCredentials"`
-	PreferredMfaType string      `xorm:"varchar(100)" json:"preferredMfaType"`
-	RecoveryCodes    []string    `xorm:"varchar(1000)" json:"recoveryCodes"`
-	TotpSecret       string      `xorm:"varchar(100)" json:"totpSecret"`
-	MfaPhoneEnabled  bool        `json:"mfaPhoneEnabled"`
-	MfaEmailEnabled  bool        `json:"mfaEmailEnabled"`
-	MultiFactorAuths []*MfaProps `xorm:"-" json:"multiFactorAuths,omitempty"`
+	WebauthnCredentials []webauthn.Credential `xorm:"webauthnCredentials blob" json:"webauthnCredentials"`
+	PreferredMfaType    string                `xorm:"varchar(100)" json:"preferredMfaType"`
+	RecoveryCodes       []string              `xorm:"varchar(1000)" json:"recoveryCodes"`
+	TotpSecret          string                `xorm:"varchar(100)" json:"totpSecret"`
+	MfaPhoneEnabled     bool                  `json:"mfaPhoneEnabled"`
+	MfaEmailEnabled     bool                  `json:"mfaEmailEnabled"`
+	MultiFactorAuths    []*MfaProps           `xorm:"-" json:"multiFactorAuths,omitempty"`
+	Invitation          string                `xorm:"varchar(100) index" json:"invitation"`
+	InvitationCode      string                `xorm:"varchar(100) index" json:"invitationCode"`
 
 	Ldap       string            `xorm:"ldap varchar(100)" json:"ldap"`
 	Properties map[string]string `json:"properties"`
