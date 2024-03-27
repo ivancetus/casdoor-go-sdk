@@ -28,6 +28,13 @@ type Claims struct {
 	PpgId     string `json:"ppgId"`
 	Scope     string `json:"scope,omitempty"`
 	jwt.RegisteredClaims
+	TokenType        string `json:"tokenType"`
+	RefreshTokenType string `json:"TokenType"`
+}
+
+// IsRefreshToken returns true if the token is a refresh token
+func (c Claims) IsRefreshToken() bool {
+	return c.RefreshTokenType == "refresh-token"
 }
 
 //type Claims struct {
