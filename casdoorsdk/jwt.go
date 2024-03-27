@@ -22,11 +22,10 @@ import (
 
 type Claims struct {
 	*User
-	TokenType string `json:"tokenType,omitempty"`
-	Nonce     string `json:"nonce,omitempty"`
-	Tag       string `json:"tag"`
-	PpgId     string `json:"ppgId"`
-	Scope     string `json:"scope,omitempty"`
+	Nonce string `json:"nonce,omitempty"`
+	Tag   string `json:"tag"`
+	PpgId string `json:"ppgId"`
+	Scope string `json:"scope,omitempty"`
 	jwt.RegisteredClaims
 	TokenType        string `json:"tokenType"`
 	RefreshTokenType string `json:"TokenType"`
