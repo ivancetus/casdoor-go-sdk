@@ -30,7 +30,10 @@ type ManagedAccount struct {
 	Password    string `xorm:"varchar(100)" json:"password"`
 	SigninUrl   string `xorm:"varchar(200)" json:"signinUrl"`
 }
-
+type FaceId struct {
+	Name       string    `xorm:"varchar(100) notnull pk" json:"name"`
+	FaceIdData []float64 `json:"faceIdData"`
+}
 type MfaProps struct {
 	Enabled       bool     `json:"enabled"`
 	IsPreferred   bool     `json:"isPreferred"`
@@ -42,17 +45,20 @@ type MfaProps struct {
 }
 
 type Userinfo struct {
-	Sub         string   `json:"sub"`
-	Iss         string   `json:"iss"`
-	Aud         string   `json:"aud"`
-	PpgID       string   `json:"ppg_id"`
-	Name        string   `json:"preferred_username,omitempty"`
-	DisplayName string   `json:"name,omitempty"`
-	Email       string   `json:"email,omitempty"`
-	Avatar      string   `json:"picture,omitempty"`
-	Address     string   `json:"address,omitempty"`
-	Phone       string   `json:"phone,omitempty"`
-	Groups      []string `json:"groups,omitempty"`
+	Sub           string   `json:"sub"`
+	Iss           string   `json:"iss"`
+	Aud           string   `json:"aud"`
+	PpgID         string   `json:"ppg_id"`
+	Name          string   `json:"preferred_username,omitempty"`
+	DisplayName   string   `json:"name,omitempty"`
+	Email         string   `json:"email,omitempty"`
+	EmailVerified bool     `json:"email_verified,omitempty"`
+	Avatar        string   `json:"picture,omitempty"`
+	Address       string   `json:"address,omitempty"`
+	Phone         string   `json:"phone,omitempty"`
+	Groups        []string `json:"groups,omitempty"`
+	Roles         []string `json:"roles,omitempty"`
+	Permissions   []string `json:"permissions,omitempty"`
 }
 
 // User has the same definition as https://github.com/casdoor/casdoor/blob/master/object/user.go#L24
@@ -96,6 +102,8 @@ type User struct {
 	Score             int      `json:"score"`
 	Karma             int      `json:"karma"`
 	Ranking           int      `json:"ranking"`
+	Balance           float64  `json:"balance"`
+	Currency          string   `xorm:"varchar(100)" json:"currency"`
 	IsDefaultAvatar   bool     `json:"isDefaultAvatar"`
 	IsOnline          bool     `json:"isOnline"`
 	IsAdmin           bool     `json:"isAdmin"`
@@ -106,6 +114,7 @@ type User struct {
 	PreHash           string   `xorm:"varchar(100)" json:"preHash"`
 	AccessKey         string   `xorm:"varchar(100)" json:"accessKey"`
 	AccessSecret      string   `xorm:"varchar(100)" json:"accessSecret"`
+	AccessToken       string   `xorm:"mediumtext" json:"accessToken"`
 
 	CreatedIp      string `xorm:"varchar(100)" json:"createdIp"`
 	LastSigninTime string `xorm:"varchar(100)" json:"lastSigninTime"`
@@ -198,6 +207,7 @@ type User struct {
 	MultiFactorAuths    []*MfaProps           `xorm:"-" json:"multiFactorAuths,omitempty"`
 	Invitation          string                `xorm:"varchar(100) index" json:"invitation"`
 	InvitationCode      string                `xorm:"varchar(100) index" json:"invitationCode"`
+	FaceIds             []*FaceId             `json:"faceIds"`
 
 	Ldap       string            `xorm:"ldap varchar(100)" json:"ldap"`
 	Properties map[string]string `json:"properties"`
